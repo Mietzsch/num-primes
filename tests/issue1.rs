@@ -1,5 +1,3 @@
-use num::*;
-use num_bigint::BigUint;
 use num_primes::*;
 
 // ===Issue #1===
@@ -24,9 +22,9 @@ fn bug1() {
 
     for number in numbers {
         if Verification::is_prime(&number) {
-            println!("[Prime] {}", number);
+            println!("[Prime] {number}");
         } else {
-            println!("[Composite] {}", number);
+            println!("[Composite] {number}");
         }
     }
 }

@@ -1,4 +1,4 @@
-use num_bigint::{BigInt, BigUint, ToBigInt, ToBigUint};
+use num_bigint::BigUint;
 use num_primes::Generator;
 
 #[test]
@@ -8,4 +8,4 @@ fn calling_gets_biguint_with_random() {
     gets_biguint(&p); // generates the error
 }
 
-fn gets_biguint(x: &BigUint) {}
+fn gets_biguint(_x: &BigUint) {}

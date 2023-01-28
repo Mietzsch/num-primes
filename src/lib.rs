@@ -5,11 +5,14 @@ extern crate num;
 extern crate num_bigint as bigint;
 extern crate rand;
 
+use bigint::RandomBits;
 pub use bigint::{BigUint, RandBigInt};
+use core::convert::TryInto;
 use core::ops::Sub;
 use num::Integer;
 use num_traits::*;
 use num_traits::{One, Zero};
+use rand::Rng;
 
 use log::debug;
 use log::error;
@@ -96,7 +99,7 @@ impl Generator {
         let mut rng = rand::thread_rng();
         loop {
             // Make mutable and set LSB and MSB
-            let candidate: BigUint = rng.gen_biguint(n);
+            let candidate: BigUint = rng.sample(RandomBits::new(n.try_into().unwrap()));
             //candidate.set_bit(0, true);
             //candidate.set_bit((n-1) as u32, true);
             if is_prime(&candidate) == false {
@@ -120,7 +123,7 @@ impl Generator {
     /// ```
     pub fn new_uint(n: usize) -> BigUint {
         let mut rng = rand::thread_rng();
-        return rng.gen_biguint(n);
+        return rng.sample(RandomBits::new(n.try_into().unwrap()));
     }
 
     /// # Generate Prime Number
@@ -146,12 +149,12 @@ impl Generator {
 
         loop {
             // Make mutable and set LSB and MSB
-            let candidate: BigUint = rng.gen_biguint(n);
+            let candidate: BigUint = rng.sample(RandomBits::new(n.try_into().unwrap()));
 
             //candidate.set_bit(0, true);
             //candidate.set_bit((n-1) as u32, true);
 
-            if is_prime(&candidate) == true {
+            if is_prime(&candidate) {
                 return candidate;
             }
         }
@@ -171,14 +174,12 @@ impl Generator {
         let mut rng = rand::thread_rng();
         loop {
             // Make mutable and set LSB and MSB
-            let candidate: BigUint = rng.gen_biguint(n);
+            let candidate: BigUint = rng.sample(RandomBits::new(n.try_into().unwrap()));
             //candidate.set_bit(0, true);
             //candidate.set_bit((n-1) as u32, true);
-            if is_prime(&candidate) == true {
-                if is_safe_prime(&candidate) == true {
-                    // checks with (p-1/n)
-                    return candidate;
-                }
+            if is_prime(&candidate) == true && is_safe_prime(&candidate) == true {
+                // checks with (p-1/n)
+                return candidate;
             }
         }
     }
@@ -214,13 +215,13 @@ impl Verification {
     ///     let x: BigUint = BigUint::from_u64(7u64).unwrap();
     ///
     ///     // Verify Its A Smooth Number
-    ///     let result: bool = Verification::is_smooth_number(&x,31.0,5);
+    ///     let result: bool = Verification::is_very_smooth_number(&x,31.0,5);
     ///
     ///     println!("Is A {} Smooth Number: {}",x,result);
     /// }
     /// ```
     pub fn is_very_smooth_number(m: &BigUint, n: f64, c: u32) -> bool {
-        return vsn(m, n, c);
+        vsn(m, n, c)
     }
 }
 
@@ -491,7 +492,7 @@ fn miller_rabin(candidate: &BigUint, limit: usize) -> bool {
             }
         }
     }
-    return true;
+    true
 }
 
 // Rewrite for Miller-Rabin

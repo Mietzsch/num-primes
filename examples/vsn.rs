@@ -9,5 +9,5 @@ fn main() {
     // Verify Its A Smooth Number
     let result: bool = Verification::is_very_smooth_number(&x, 31.0, 5);
 
-    println!("Is A {} Smooth Number: {}", x, result);
+    println!("Is A {x} Smooth Number: {result}");
 }
