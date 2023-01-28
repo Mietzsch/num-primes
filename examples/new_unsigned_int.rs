@@ -5,5 +5,5 @@ fn main() {
     let x = Generator::new_uint(1024);
 
     // Print Integer
-    println!("Large Unsigned Integer: {}",x);
+    println!("Large Unsigned Integer: {}", x);
 }

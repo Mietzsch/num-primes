@@ -1,6 +1,6 @@
-use num_primes::{Generator,Verification};
+use num_primes::{Generator, Verification};
 
-fn main(){
+fn main() {
     let prime = Generator::new_prime(1024);
     let safe = Generator::safe_prime(128);
 

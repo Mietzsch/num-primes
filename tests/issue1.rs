@@ -1,7 +1,6 @@
+use num::*;
 use num_bigint::BigUint;
 use num_primes::*;
-use num::*;
-
 
 // ===Issue #1===
 // - Found on 12 Aug 2021
@@ -11,25 +10,22 @@ use num::*;
 
 #[test]
 fn bug1() {
-    
-
     let numbers = [
         Generator::new_prime(8),
         Generator::new_prime(32),
         Generator::new_prime(16),
         // Two prime numbers
-        17957u32.into(), // Prime
-        5u32.into(), // Prime
-        2usize.into(), // Prime
-        num_bigint::ToBigUint::to_biguint(&5).unwrap(), // Prime
-        num_bigint::ToBigUint::to_biguint(&37463).unwrap() // Prime
+        17957u32.into(),                                    // Prime
+        5u32.into(),                                        // Prime
+        2usize.into(),                                      // Prime
+        num_bigint::ToBigUint::to_biguint(&5).unwrap(),     // Prime
+        num_bigint::ToBigUint::to_biguint(&37463).unwrap(), // Prime
     ];
 
     for number in numbers {
         if Verification::is_prime(&number) {
             println!("[Prime] {}", number);
-        }
-        else {
+        } else {
             println!("[Composite] {}", number);
         }
     }
